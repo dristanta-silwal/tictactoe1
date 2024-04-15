@@ -1,6 +1,3 @@
-Sure! Here's a sample README.md file for your Tic Tac Toe project on GitHub:
-
-```
 # Tic Tac Toe Game using React
 
 This project is a simple implementation of the classic Tic Tac Toe game using React. It follows the tutorial provided on the official React website [here](https://react.dev/learn/tutorial-tic-tac-toe).
