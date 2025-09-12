@@ -1,71 +1,104 @@
+/* Reset & base */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
 body {
-    margin: 0;
-    font: 30px "Century Gothic", Futura, sans-serif;
-    width: 100%;
-    box-sizing: content-box;
-    border-width: 12px;
-    padding-top: 20px;
-    background: rgb(95, 91, 91);
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  background: linear-gradient(180deg, #f6f9fc 0%, #eef2f7 100%);
+  color: #111827;
 }
 
-ol,
-ul {
-    padding-left: 30px;
-}
-
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-}
-
-.status {
-    margin-bottom: 10px;
-}
-
-.square {
-    background: rgb(95, 91, 91);
-    border: 1px solid rgb(0, 0, 0);
-    float: left;
-    font-size: 40px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    height: 50px;
-    width: 50px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-}
-
-.square:focus {
-    outline: none;
-}
-
-.kbd-navigation .square:focus {
-    background: #ddd;
-}
-
+/* Layout */
 .game {
-    display: block;
-    align-items: center;
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+@media (min-width: 860px) {
+  .game { grid-template-columns: 1fr 320px; align-items: start; }
 }
 
-.game-info {
-    margin-top: 20px;
+/* Cards */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(16, 24, 40, 0.08), 0 2px 6px rgba(16, 24, 40, 0.05);
+  padding: 16px;
+  border: 1px solid #e5e7eb;
 }
-.game-info button{
-    background: rgb(95, 91, 91);
-    border: none;
-    font-size: 100px solid white;
-    color: rgb(0, 0, 0);
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 25px;
+
+/* Status bar and controls */
+.status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
+.status {
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
+}
+.controls { display: flex; gap: 8px; }
+
+/* Board */
+.board { display: grid; gap: 10px; }
+.board-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+/* Squares */
+.square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 800;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.06);
+}
+.square:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(16, 24, 40, 0.12); background: #f9fafb; }
+.square:active { transform: translateY(0); }
+.square-x { color: #dc2626; }  /* red */
+.square-o { color: #2563eb; }  /* blue */
+.square-win { animation: glow 1.2s ease-in-out infinite alternate; border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15), 0 6px 16px rgba(245, 158, 11, 0.28); }
+@keyframes glow { from { background: #fff7ed; } to { background: #fffbeb; } }
+
+/* Buttons */
+.btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+.btn:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(16, 24, 40, 0.1); }
+.btn:active { transform: translateY(0); }
+.btn-reset { border-color: #fecaca; background: #fff1f2; color: #b91c1c; }
+.btn-reset:hover { background: #ffe4e6; }
+
+/* Moves list */
+.game-info h3 { margin: 0 0 8px 0; font-size: 1rem; }
+.moves-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; max-height: 60vh; overflow: auto; }
+.move-btn { width: 100%; text-align: left; padding: 8px 10px; border-radius: 10px; border: 1px solid #e5e7eb; background: #fff; cursor: pointer; transition: background 120ms ease; }
+.move-btn:hover { background: #f9fafb; }
+.move-btn.active-move { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; font-weight: 700; }
+
+/* Utility */
+.hidden { display: none; }
